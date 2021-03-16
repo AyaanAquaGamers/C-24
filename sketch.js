@@ -1,25 +1,58 @@
-const Engine = Matter.Engine;
-const World= Matter.World;
-const Bodies = Matter.Bodies;
-
-var engine, world;
-var box1,box2;
+var paper
 var ground
+var leftSide
+var bottom
+var rightSide
 
-function setup(){
-    var canvas = createCanvas(400,400);
-    engine = Engine.create();
-    world = engine.world;
+const Engine = Matter.Engine;
+const World = Matter.World;
+const Bodies = Matter.Bodies;
+const Body = Matter.Body;
 
-    box1=new Box(200,300,50,50)
-    box2=new Box(240,100,50,100)
-    ground=new Ground(200,390,400,20)
+function preload()
+{
+	
 }
 
-function draw(){
-    background(0);  
-    Engine.update(engine);
-    box1.display()
-    box2.display()
-    ground.display()
+function setup() {
+	createCanvas(800, 700);
+
+	engine = Engine.create();
+	world = engine.world;
+
+  paper = new Paper(100,600,30) 
+  
+  ground = new Ground(400,650,800,20)
+
+ leftSide=createSprite(520,620,20,40)
+ bottom=createSprite(610,630,180,20)
+ rightSide=createSprite(710,620,20,40)
+
+
+	Engine.run(engine);
+  
+}
+
+
+function draw() {
+  rectMode(CENTER);
+
+  background("pink");
+
+  Engine.update(engine)
+
+  ground.display()
+
+  paper.display()
+
+
+  drawSprites();
+ 
+}
+
+
+function keyPressed(){
+	if(keyCode === UP_ARROW){
+		Matter.Body.applyForce(paper.body,paper.body.position,{x:23,y:-50})
+	}
 }
